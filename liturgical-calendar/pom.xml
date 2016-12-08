@@ -18,7 +18,7 @@
 	</properties>
 
 	<dependencies>
-			<dependency>
+		<dependency>
 			<groupId>com.joeldholmes</groupId>
 			<artifactId>liturgy-common</artifactId>
 			<version>0.0.1</version>
@@ -52,15 +52,35 @@
 	</dependencies>
 	<build>
 		<resources>
-	        <resource>
-	            <directory>src/main/resources</directory>
-	            <filtering>false</filtering>
-	        </resource>
-	    </resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- Build an executable JAR -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>com.joeldholmes.liturgicalcalendar.App</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2.1</version>
+				<configuration>
+					<descriptors>
+						<descriptor>distribution.xml</descriptor>
+					</descriptors>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

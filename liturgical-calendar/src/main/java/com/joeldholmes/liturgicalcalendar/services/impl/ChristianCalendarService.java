@@ -51,12 +51,8 @@ public class ChristianCalendarService implements IChristianCalendarService {
 		date = cleanDate(date);
 		try{
 			Map<DateTime, Set<ChristianSpecialDatesEnum>> dateMap = calFactory.getDateMap(date);
-			Set<ChristianSpecialDatesEnum> holidayEnums;
+			Set<ChristianSpecialDatesEnum> holidayEnums = new HashSet<ChristianSpecialDatesEnum>();
 			if(dateMap.containsKey(date)){
-				holidayEnums = dateMap.get(date);
-			}
-			else{
-				date = date.minusWeeks(1).withDayOfWeek(DateTimeConstants.SUNDAY);
 				holidayEnums = dateMap.get(date);
 			}
 			return holidayEnums;

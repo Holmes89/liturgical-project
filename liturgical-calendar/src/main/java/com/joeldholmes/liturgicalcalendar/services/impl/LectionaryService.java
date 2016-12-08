@@ -73,6 +73,8 @@ public class LectionaryService implements ILectionaryService {
 				LitanyEventsEnum litanyEventsEnum = litCalMap.get(event);
 				dto.liturgicalDate=event.getDisplayName();
 				dto.litany = lectionary.get(litanyEventsEnum);
+				dto.liturgicalYear=yearCode.charAt(0);
+				dto.year=now.getYear();
 				result.put(event.getDisplayName(), dto);
 			}
 			return result;

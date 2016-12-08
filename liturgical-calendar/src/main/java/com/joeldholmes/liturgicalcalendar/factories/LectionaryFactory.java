@@ -18,7 +18,7 @@ import com.joeldholmes.liturgycommon.util.ErrorCodes;
 
 public class LectionaryFactory {
 
-	private final String ENG_FILE = "/json/lectionary.json";
+	private final String ENG_FILE = "json/lectionary.json";
 
 	Map<String, Map<LitanyEventsEnum, Set<String>>> lectionary;
 	
@@ -29,10 +29,9 @@ public class LectionaryFactory {
 	   }
 	
 	private LectionaryFactory(){
-		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource(ENG_FILE).getFile());
+		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 		try{
-			InputStream resourceInputStream = new FileInputStream(file);
+			InputStream resourceInputStream = classloader.getResourceAsStream(ENG_FILE);
 			TypeReference<LinkedHashMap<String, LinkedHashMap<String, HashSet<String>>>> typeRef = new TypeReference<LinkedHashMap<String, LinkedHashMap<String, HashSet<String>>>>() {};
 			ObjectMapper mapper = new ObjectMapper();
 			Map<String, Map<String, Set<String>>> tempMap = mapper.readValue(resourceInputStream, typeRef);
