@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.joeldholmes</groupId>
-    <artifactId>liturgy-project-parent</artifactId>
+    <artifactId>liturgy-project</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1</version>
     <name>LiturgyProject</name>
@@ -17,7 +17,7 @@
     <modules>
     	<module>liturgy-common</module>
     	<module>liturgical-calendar</module>
-	<module>liturgy-api</module>
+    	<module>liturgy-api</module>
     </modules>
 
     <dependencies>
