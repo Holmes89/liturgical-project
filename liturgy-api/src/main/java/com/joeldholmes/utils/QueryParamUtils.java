@@ -38,6 +38,35 @@ public class QueryParamUtils {
 		return results;
 	}
 	
+	public static Map<String, Set<String>> getFilters(QueryParams qParam){
+		Map<String, Set<String>> results = new HashMap<String, Set<String>>();
+		Map<String, FilterParams> qParamMap = qParam.getFilters().getParams();
+		
+		for(String key: qParamMap.keySet()){
+			FilterParams filterParam = qParamMap.get(key);
+			Set<String> filterSet = filterParam.getParams().get("");
+			if(filterSet!=null && !filterSet.isEmpty()){
+				results.put(key, filterSet);
+			}
+		}
+		return results;
+	}
+	
+	public static Map<String, String> getSingleFilters(QueryParams params) {
+		Map<String, String> results = new HashMap<String, String>();
+		Map<String, FilterParams> qParamMap = params.getFilters().getParams();
+		
+		for(String key: qParamMap.keySet()){
+			FilterParams filterParam = qParamMap.get(key);
+			Set<String> filterSet = filterParam.getParams().get("");
+			if(filterSet!=null && !filterSet.isEmpty()){
+				if(filterSet.iterator().hasNext())
+					results.put(key, filterSet.iterator().next());
+			}
+		}
+		return results;
+	}
+	
 	public static Pageable getPageable(QueryParams params){
 		Sort sort = null;
 		Map<String, SortingParams> sortingParams = params.getSorting().getParams();
@@ -98,4 +127,6 @@ public class QueryParamUtils {
 		
 		return pag;
 	}
+
+	
 }

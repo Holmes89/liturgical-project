@@ -1,18 +1,15 @@
 package com.joeldholmes.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Lists;
-import com.joeldholmes.entity.LiturgyEntity;
 import com.joeldholmes.liturgycommon.exceptions.ServiceException;
-import com.joeldholmes.repository.ILiturgyRepository;
 import com.joeldholmes.resources.LiturgyResource;
+import com.joeldholmes.services.interfaces.ILiturgyService;
 import com.joeldholmes.utils.QueryParamUtils;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
@@ -26,18 +23,33 @@ import io.katharsis.repository.annotations.JsonApiResourceRepository;
 public class LiturgyResourceController {
 	
 	@Autowired
-	ILiturgyRepository litRepo;
+	ILiturgyService litService;
 	
-	@HystrixCommand(commandKey="LiturgyFindAll", groupKey="BibleVerse", threadPoolKey="BibleVerse")
+	@HystrixCommand(commandKey="LiturgyFindAll", groupKey="Liturgy", threadPoolKey="Liturgy")
 	@JsonApiFindAll
 	public Iterable<LiturgyResource> findAll(QueryParams params) throws ServiceException{
-		Pageable pageable = QueryParamUtils.getPageable(params);
-		List<LiturgyEntity> all = Lists.newArrayList(litRepo.findAll(pageable).iterator());
-		List<LiturgyResource> resources = new ArrayList<LiturgyResource>();
-		for(LiturgyEntity entity: all){
-			resources.add(LiturgyResource.convertEntity(entity));
+		Map<String, String> filters = QueryParamUtils.getSingleFilters(params);
+		if(filters.containsKey("date")){
+			return litService.findByDate(filters.get("date"));
 		}
-		return resources;
+		else if(filters.containsKey("approxDate")){
+			return litService.findByApproximateDate(filters.get("approxDate"));
+		}
+		else if(filters.containsKey("startDate") && filters.containsKey("endDate")){
+			return litService.findByDateRange(filters.get("startDate"), filters.get("endDate"));
+		}
+		else if(filters.containsKey("holiday") && filters.containsKey("year")){
+			return litService.findByHoliday(filters.get("holiday"), filters.get("year"));
+		}
+		else if(filters.containsKey("year")){
+			return litService.findByYear(filters.get("year"));
+		}
+		else if(filters.containsKey("holiday")){
+			return litService.findByHoliday(filters.get("holiday"));
+		}
+		return null;
 	}
+	
+	
 
 }

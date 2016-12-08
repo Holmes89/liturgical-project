@@ -1,5 +1,8 @@
 package com.joeldholmes.repository;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -12,8 +15,9 @@ public interface ILiturgyRepository extends MongoRepository<LiturgyEntity, Strin
 	@Query("{\"_id\": ?0, }")
 	LiturgyEntity findById(String id);
 	
-	@Query("{\"date\": ?0, }")
-	LiturgyEntity findByDate(Long timestamp);
+	List<LiturgyEntity> findByDate(Date date);
 	
 	Page<LiturgyEntity> findAll(Pageable page);
+	
+	
 }

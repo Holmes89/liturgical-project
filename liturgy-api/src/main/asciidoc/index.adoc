@@ -1,6 +1,0 @@
-= Sacred Text API
-Lead Developer - Joel Holmes
-
-include::{snippets}/bible/http-request.adoc[]
-include::{snippets}/bible/path-parameters.adoc[]
-include::{snippets}/bible/http-response.adoc[]

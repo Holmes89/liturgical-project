@@ -3,8 +3,6 @@ package com.joeldholmes.liturgycommon.dto;
 import java.util.Date;
 import java.util.Set;
 
-import com.joeldholmes.liturgycommon.enums.LitanyEventsEnum;
-
 public class LiturgyDTO {
 
 	public Date date;
