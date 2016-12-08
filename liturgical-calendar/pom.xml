@@ -5,7 +5,7 @@
 
 	<groupId>com.joeldholmes</groupId>
 	<artifactId>liturgical-calendar</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>liturgical-calendar</name>
@@ -18,6 +18,11 @@
 	</properties>
 
 	<dependencies>
+			<dependency>
+			<groupId>com.joeldholmes</groupId>
+			<artifactId>liturgy-common</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -46,6 +51,12 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<resources>
+	        <resource>
+	            <directory>src/main/resources</directory>
+	            <filtering>false</filtering>
+	        </resource>
+	    </resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

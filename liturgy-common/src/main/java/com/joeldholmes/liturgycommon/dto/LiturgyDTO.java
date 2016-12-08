@@ -11,7 +11,7 @@ public class LiturgyDTO {
 	
 	public int year;
 	
-	public LitanyEventsEnum liturgicalDate;
+	public String liturgicalDate;
 	
 	public char liturgicalYear;
 	
