@@ -20,16 +20,16 @@ class MongoDbConfig extends AbstractMongoConfiguration {
 	@Value("${db.name:liturgical-calendar}")
 	String database;
 	
-	@Value("${db.host:localhost}")
+	@Value("${db.host:ds129028.mlab.com}")
 	String host;
 	
-	@Value("${db.port:27017}")
+	@Value("${db.port:29028}")
 	Integer port;
 	
-	@Value("${db.username:#{null}}")
+	@Value("${db.username:public}")
 	String userName;
 
-	@Value("${db.password:#{null}}")
+	@Value("${db.password:public}")
 	String password;
 		
 	@Override

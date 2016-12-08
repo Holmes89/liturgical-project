@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.joeldholmes.liturgicalcalendar.services.impl.LectionaryService;
 import com.joeldholmes.liturgicalcalendar.services.interfaces.ILectionaryService;
 import com.joeldholmes.liturgycommon.dto.LiturgyDTO;
@@ -27,7 +28,12 @@ public class App
     	for(int x=0; x<(366*300); x++){
     		Map<String, LiturgyDTO> lectionaryResults = lectService.getLectionary(date);
     		for(LiturgyDTO dto : lectionaryResults.values()){
-    			System.out.println(mapper.writeValueAsString(dto));
+    			ObjectNode objectNode = mapper.convertValue(dto, ObjectNode.class);
+    			objectNode.remove("date");
+    			ObjectNode dateNode = mapper.createObjectNode();
+    			dateNode.put("$date", dto.date.getTime());
+    			objectNode.set("date", dateNode);
+    			System.out.println(mapper.writeValueAsString(objectNode));
     		}
     		date = date.plusDays(1);
     	}
