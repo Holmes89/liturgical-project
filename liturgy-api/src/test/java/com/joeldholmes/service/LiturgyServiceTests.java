@@ -182,8 +182,6 @@ public class LiturgyServiceTests {
 	}
 	@Test
 	public void testFindByHoliday_invalidName() throws Exception{
-		DateTime currentDate = new DateTime();
-		
 		List<LiturgyResource> resources = litService.findByHoliday("asdfasdf");
 		Assert.assertTrue(resources.isEmpty());
 	}

@@ -81,6 +81,9 @@ public class LiturgyService implements ILiturgyService{
 	
 	@Override
 	public List<LiturgyResource> findByHoliday(String holiday, int year)  throws ServiceException{
+		if(holiday==null || holiday.isEmpty()){
+			throw new ServiceException(ErrorCodes.NULL_INPUT, "Holiday String must not be null or empty");
+		}
 		List<LiturgyEntity> entities = lectRepo.findByLiturgicalDateAndYear(holiday, year);
 		return convertEntities(entities);
 	}
