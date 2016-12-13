@@ -1,0 +1,23 @@
+language: java
+
+sudo: true
+
+group: edge
+  
+cache:
+  directories:
+    - $HOME/.m2
+jdk:
+  - oraclejdk8
+os:
+  - linux
+
+script: mvn clean install
+
+branches:
+  only:
+    - master
+    - mongodb
+
+after_success:
+  - mvn clean test jacoco:report coveralls:report

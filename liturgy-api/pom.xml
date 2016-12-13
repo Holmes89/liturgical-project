@@ -64,7 +64,7 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka</artifactId>
 		</dependency>
-	  	<dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-hystrix</artifactId>
 			<version>1.1.5.RELEASE</version>
@@ -104,18 +104,35 @@
 		</dependency>
 		<dependency>
 			<groupId>io.katharsis</groupId>
-	    	<artifactId>katharsis-spring</artifactId>
+			<artifactId>katharsis-spring</artifactId>
 			<version>2.4.2</version>
-		</dependency>	
-		 <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.9.10</version>
-        </dependency>
+		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.10</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.3</version>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>3.0.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>3.0.1</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -140,6 +157,27 @@
 				<configuration>
 					<redirectTestOutputToFile>true</redirectTestOutputToFile>
 				</configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.eluder.coveralls</groupId>
+			    <artifactId>coveralls-maven-plugin</artifactId>
+			    <version>4.3.0</version>
+			    <configuration>
+			        <repoToken>y8OSo4okXAbFlpayeFs7hD70UNFBhNSXRH</repoToken>
+			    </configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.jacoco</groupId>
+			    <artifactId>jacoco-maven-plugin</artifactId>
+			    <version>0.7.6.201602180812</version>
+			    <executions>
+			        <execution>
+			            <id>prepare-agent</id>
+			            <goals>
+			                <goal>prepare-agent</goal>
+			            </goals>
+			        </execution>
+			    </executions>
 			</plugin>
 		</plugins>
 	</build>

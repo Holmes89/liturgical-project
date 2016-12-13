@@ -29,6 +29,9 @@ public class LiturgyService implements ILiturgyService{
 	
 	@Override
 	public List<LiturgyResource> findByDate(String dateString) throws ServiceException {
+		if(dateString==null || dateString.isEmpty()){
+			throw new ServiceException(ErrorCodes.NULL_INPUT, "Date String must not be null or empty");
+		}
 		Date date = convertDate(dateString);
 		return convertEntities(lectRepo.findByDate(date));
 	}
@@ -36,6 +39,9 @@ public class LiturgyService implements ILiturgyService{
 
 	@Override
 	public List<LiturgyResource> findByApproximateDate(String dateString) throws ServiceException  {
+		if(dateString==null || dateString.isEmpty()){
+			throw new ServiceException(ErrorCodes.NULL_INPUT, "Date String must not be null or empty");
+		}
 		DateTime date = new DateTime(convertDate(dateString));
 		List<LiturgyEntity> entities = lectRepo.findByDateBetween(date.toDate(), date.plusWeeks(1).toDate());
 		List<LiturgyResource> returnValues = new ArrayList<LiturgyResource>();
@@ -48,6 +54,12 @@ public class LiturgyService implements ILiturgyService{
 
 	@Override
 	public List<LiturgyResource> findByDateRange(String startDateString, String endDateString) throws ServiceException {
+		if(startDateString==null || startDateString.isEmpty()){
+			throw new ServiceException(ErrorCodes.NULL_INPUT, "Start Date String must not be null or empty");
+		}
+		if(endDateString==null || endDateString.isEmpty()){
+			throw new ServiceException(ErrorCodes.NULL_INPUT, "End Date String must not be null or empty");
+		}
 		DateTime startDate = new DateTime(convertDate(startDateString));
 		DateTime endDate = new DateTime(convertDate(endDateString));
 		List<LiturgyEntity> entities = lectRepo.findByDateBetween(startDate.toDate(), endDate.toDate());
@@ -57,28 +69,39 @@ public class LiturgyService implements ILiturgyService{
 
 	@Override
 	public List<LiturgyResource> findByHoliday(String holiday, String year)  throws ServiceException{
+		if(holiday==null || holiday.isEmpty()){
+			throw new ServiceException(ErrorCodes.NULL_INPUT, "Holiday String must not be null or empty");
+		}
+		if(year==null || year.isEmpty()){
+			throw new ServiceException(ErrorCodes.NULL_INPUT, "Year String must not be null or empty");
+		}
 		int convertedYear = convertYear(year);
 		return findByHoliday(holiday, convertedYear);
 	}
 	
 	@Override
 	public List<LiturgyResource> findByHoliday(String holiday, int year)  throws ServiceException{
-		// TODO Auto-generated method stub
-		return null;
+		List<LiturgyEntity> entities = lectRepo.findByLiturgicalDateAndYear(holiday, year);
+		return convertEntities(entities);
 	}
 
 
 	@Override
 	public List<LiturgyResource> findByYear(String year) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		if(year==null || year.isEmpty()){
+			throw new ServiceException(ErrorCodes.NULL_INPUT, "Year String must not be null or empty");
+		}
+		int convertedYear = convertYear(year);
+		List<LiturgyEntity> entities = lectRepo.findByYear(convertedYear);
+		return convertEntities(entities);
 	}
 
 
 	@Override
 	public List<LiturgyResource> findByHoliday(String holiday) throws ServiceException  {
-		// TODO Auto-generated method stub
-		return null;
+		DateTime date = new DateTime();
+		int year = date.getYear();
+		return findByHoliday(holiday, year);
 	}
 	
 	private Date convertDate(String dateString) throws ServiceException{
