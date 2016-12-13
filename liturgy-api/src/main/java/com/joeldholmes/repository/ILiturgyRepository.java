@@ -19,5 +19,10 @@ public interface ILiturgyRepository extends MongoRepository<LiturgyEntity, Strin
 	
 	Page<LiturgyEntity> findAll(Pageable page);
 	
+	List<LiturgyEntity> findByDateBetween(Date startDate, Date endDate);
+	
+	List<LiturgyEntity> findByYear(Integer year);
+	
+	List<LiturgyEntity> findByLiturgicalDateAndYear(String liturgicalDate, Integer year);
 	
 }
