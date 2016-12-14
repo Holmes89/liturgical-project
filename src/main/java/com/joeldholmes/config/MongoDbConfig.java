@@ -34,14 +34,10 @@ class MongoDbConfig extends AbstractMongoConfiguration {
 		
 	@Override
 	public Mongo mongo() throws Exception {
-		MongoClient mongoClient;
-		if((userName==null)&&(password==null)){
-			mongoClient = new MongoClient(new ServerAddress(host, port));
-		}
-		else{
-			MongoCredential credential = MongoCredential.createCredential(userName, database, password.toCharArray());
-			mongoClient = new MongoClient(new ServerAddress(host, port), Arrays.asList(credential));
-		}
+	
+		MongoCredential credential = MongoCredential.createCredential(userName, database, password.toCharArray());
+		MongoClient mongoClient = new MongoClient(new ServerAddress(host, port), Arrays.asList(credential));
+	
 		return mongoClient;
 	}
 	

@@ -46,7 +46,9 @@ public class LiturgyResourceController {
 		else if(filters.containsKey("holiday")){
 			return litService.findByHoliday(filters.get("holiday"));
 		}
-		return null;
+		else{
+			return null;
+		}
 	}
 	
 	
