@@ -1,7 +1,7 @@
 package com.joeldholmes.resources;
 
+import com.joeldholmes.dto.LiturgyDTO;
 import com.joeldholmes.entity.LiturgyEntity;
-import com.joeldholmes.liturgycommon.dto.LiturgyDTO;
 
 import io.katharsis.resource.annotations.JsonApiId;
 import io.katharsis.resource.annotations.JsonApiResource;

@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.joeldholmes.entity.LiturgyEntity;
-import com.joeldholmes.liturgycommon.exceptions.ServiceException;
-import com.joeldholmes.liturgycommon.util.ErrorCodes;
+import com.joeldholmes.exceptions.ServiceException;
 import com.joeldholmes.repository.ILiturgyRepository;
 import com.joeldholmes.resources.LiturgyResource;
 import com.joeldholmes.services.interfaces.ILiturgyService;
+import com.joeldholmes.utils.ErrorCodes;
 
 @Service
 public class LiturgyService implements ILiturgyService{

@@ -12,12 +12,15 @@ jdk:
 os:
   - linux
 
+before_script:
+  - echo 'US/Eastern' | sudo tee /etc/timezone
+  - sudo dpkg-reconfigure --frontend noninteractive tzdata
+
 script: mvn clean install
 
 branches:
   only:
     - master
-    - mongodb
 
 after_success:
   - mvn clean test jacoco:report coveralls:report

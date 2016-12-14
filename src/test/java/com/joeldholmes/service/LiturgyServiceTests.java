@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.joeldholmes.liturgycommon.exceptions.ServiceException;
-import com.joeldholmes.liturgycommon.util.ErrorCodes;
+import com.joeldholmes.exceptions.ServiceException;
 import com.joeldholmes.resources.LiturgyResource;
 import com.joeldholmes.services.impl.LiturgyService;
+import com.joeldholmes.utils.ErrorCodes;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest

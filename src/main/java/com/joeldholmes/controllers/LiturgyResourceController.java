@@ -1,13 +1,12 @@
 package com.joeldholmes.controllers;
 
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.joeldholmes.liturgycommon.exceptions.ServiceException;
+import com.joeldholmes.exceptions.ServiceException;
 import com.joeldholmes.resources.LiturgyResource;
 import com.joeldholmes.services.interfaces.ILiturgyService;
 import com.joeldholmes.utils.QueryParamUtils;

@@ -1,4 +1,4 @@
-package com.joeldholmes.liturgycommon.exceptions;
+package com.joeldholmes.exceptions;
 
 public class ServiceException extends Exception {
 	

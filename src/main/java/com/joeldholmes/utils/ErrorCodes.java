@@ -1,4 +1,4 @@
-package com.joeldholmes.liturgycommon.util;
+package com.joeldholmes.utils;
 
 public class ErrorCodes {
 

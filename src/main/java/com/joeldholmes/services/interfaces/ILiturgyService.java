@@ -1,9 +1,8 @@
 package com.joeldholmes.services.interfaces;
 
 import java.util.List;
-import java.util.Set;
 
-import com.joeldholmes.liturgycommon.exceptions.ServiceException;
+import com.joeldholmes.exceptions.ServiceException;
 import com.joeldholmes.resources.LiturgyResource;
 
 public interface ILiturgyService {

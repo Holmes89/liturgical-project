@@ -1,4 +1,4 @@
-package com.joeldholmes.liturgycommon.dto;
+package com.joeldholmes.dto;
 
 import java.util.Date;
 import java.util.Set;
