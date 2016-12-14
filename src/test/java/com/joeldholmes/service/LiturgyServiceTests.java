@@ -212,7 +212,37 @@ public class LiturgyServiceTests {
 		Assert.assertFalse(resources.isEmpty());
 		Assert.assertEquals(71, resources.size());
 	}
-
+	
+	@Test(expected=ServiceException.class)
+	public void testFindByHoliday_nullYear() throws Exception{
+		try{
+			litService.findByYear(null);
+		} catch(ServiceException e){
+			Assert.assertEquals(ErrorCodes.NULL_INPUT, e.getErrorCode());
+			throw e;
+		}
+	}
+	
+	@Test(expected=ServiceException.class)
+	public void testFindByHoliday_emptyYear() throws Exception{
+		try{
+			litService.findByYear("");
+		} catch(ServiceException e){
+			Assert.assertEquals(ErrorCodes.NULL_INPUT, e.getErrorCode());
+			throw e;
+		}
+	}
+	
+	@Test(expected=ServiceException.class)
+	public void testFindByHoliday_InvalidYear() throws Exception{
+		try{
+			litService.findByYear("fasdfasdf");
+		} catch(ServiceException e){
+			Assert.assertEquals(ErrorCodes.INVALID_INPUT, e.getErrorCode());
+			throw e;
+		}
+	}
+	
 	@Test
 	public void testFindByHoliday_StringAndString() throws Exception{
 		List<LiturgyResource> resources = litService.findByHoliday("Pentecost", "2017");
@@ -227,6 +257,47 @@ public class LiturgyServiceTests {
 		Assert.assertEquals(4, date.getDayOfMonth());
 		Assert.assertEquals("Pentecost", resource.liturgicalDate);
 		Assert.assertEquals(6, resource.litany.size());
+	}
+	
+	@Test(expected=ServiceException.class)
+	public void testFindByHoliday_StringAndString_nulls() throws Exception{
+		String year = null;
+		try{
+			litService.findByHoliday("Pentecost", year);
+		} catch(ServiceException e){
+			Assert.assertEquals(ErrorCodes.NULL_INPUT, e.getErrorCode());
+		}
+		try{
+			litService.findByHoliday(null, "2016");
+		} catch(ServiceException e){
+			Assert.assertEquals(ErrorCodes.NULL_INPUT, e.getErrorCode());
+			throw e;
+		}
+	}
+	
+	@Test(expected=ServiceException.class)
+	public void testFindByHoliday_StringAndString_empties() throws Exception{
+		try{
+			litService.findByHoliday("", "2016");
+		} catch(ServiceException e){
+			Assert.assertEquals(ErrorCodes.NULL_INPUT, e.getErrorCode());
+		}
+		try{
+			litService.findByHoliday("Pentecost", "");
+		} catch(ServiceException e){
+			Assert.assertEquals(ErrorCodes.NULL_INPUT, e.getErrorCode());
+			throw e;
+		}
+	}
+	
+	@Test(expected=ServiceException.class)
+	public void testFindByHoliday_StringAndString_invalids() throws Exception{
+		try{
+			litService.findByHoliday("Pentecost", "asdfasdf");
+		} catch(ServiceException e){
+			Assert.assertEquals(ErrorCodes.INVALID_INPUT, e.getErrorCode());
+			throw e;
+		}
 	}
 
 	@Test
@@ -243,6 +314,26 @@ public class LiturgyServiceTests {
 		Assert.assertEquals(4, date.getDayOfMonth());
 		Assert.assertEquals("Pentecost", resource.liturgicalDate);
 		Assert.assertEquals(6, resource.litany.size());
+	}
+	
+	@Test(expected=ServiceException.class)
+	public void testFindByHoliday_StringAndInt_nulls() throws Exception{
+		try{
+			litService.findByHoliday(null, 2016);
+		} catch(ServiceException e){
+			Assert.assertEquals(ErrorCodes.NULL_INPUT, e.getErrorCode());
+			throw e;
+		}
+	}
+	
+	@Test(expected=ServiceException.class)
+	public void testFindByHoliday_StringAndInt_empties() throws Exception{
+		try{
+			litService.findByHoliday("", 2016);
+		} catch(ServiceException e){
+			Assert.assertEquals(ErrorCodes.NULL_INPUT, e.getErrorCode());
+			throw e;
+		}
 	}
 
 }
