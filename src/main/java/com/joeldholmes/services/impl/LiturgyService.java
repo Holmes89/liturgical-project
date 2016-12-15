@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +43,7 @@ public class LiturgyService implements ILiturgyService{
 		if(dateString==null || dateString.isEmpty()){
 			throw new ServiceException(ErrorCodes.NULL_INPUT, "Date String must not be null or empty");
 		}
-		DateTime date = (new LocalDateTime(convertDate(dateString))).toDateTime();
+		DateTime date = new DateTime(convertDate(dateString));
 		List<LiturgyEntity> entities = lectRepo.findByDateBetween(date.toDate(), date.plusWeeks(1).toDate());
 		List<LiturgyResource> returnValues = new ArrayList<LiturgyResource>();
 		if(!entities.isEmpty()){
@@ -61,9 +61,9 @@ public class LiturgyService implements ILiturgyService{
 		if(endDateString==null || endDateString.isEmpty()){
 			throw new ServiceException(ErrorCodes.NULL_INPUT, "End Date String must not be null or empty");
 		}
-		Date startDate = convertDate(startDateString);
-		Date endDate = convertDate(endDateString);
-		List<LiturgyEntity> entities = lectRepo.findByDateBetween(startDate, endDate);
+		DateTime startDate = new DateTime(convertDate(startDateString));
+		DateTime endDate = new DateTime(convertDate(endDateString));
+		List<LiturgyEntity> entities = lectRepo.findByDateBetween(startDate.toDate(), endDate.toDate());
 		return convertEntities(entities);
 	}
 
@@ -110,6 +110,7 @@ public class LiturgyService implements ILiturgyService{
 	
 	private Date convertDate(String dateString) throws ServiceException{
 		try {
+			dateFormatter.setTimeZone(TimeZone.getTimeZone("America/New_York"));
 			Date date = dateFormatter.parse(dateString);
 			return date;
 		} catch (ParseException e) {

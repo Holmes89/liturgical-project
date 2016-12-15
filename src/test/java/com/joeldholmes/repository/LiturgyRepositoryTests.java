@@ -3,8 +3,6 @@ package com.joeldholmes.repository;
 import java.util.List;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +21,7 @@ public class LiturgyRepositoryTests {
 	
 	@Test
 	public void testFindByDate(){
-		LocalDateTime date = new LocalDateTime(2017, 1, 1, 0, 0, 0);
+		DateTime date = new DateTime(2017, 1, 1, 0, 0, 0);
 		List<LiturgyEntity> entities = litRepo.findByDate(date.toDate());
 		Assert.assertNotNull(entities);
 		Assert.assertFalse(entities.isEmpty());
@@ -32,7 +30,7 @@ public class LiturgyRepositoryTests {
 	
 	@Test
 	public void testFindByDateBetween(){
-		DateTime startDate = new DateTime(2017, 1, 1, 0, 0, 0).withZoneRetainFields(DateTimeZone.getDefault());
+		DateTime startDate = new DateTime(2017, 1, 1, 0, 0, 0);
 		DateTime endDate = startDate.plusYears(1);
 		List<LiturgyEntity> entities = litRepo.findByDateBetween(startDate.toDate(), endDate.toDate());
 		Assert.assertNotNull(entities);
@@ -56,7 +54,7 @@ public class LiturgyRepositoryTests {
 		Assert.assertEquals(1, entities.size());
 		
 		LiturgyEntity entity = entities.get(0);
-		LocalDateTime date = new LocalDateTime(entity.date);
+		DateTime date = new DateTime(entity.date);
 		
 		Assert.assertEquals(2017, date.getYear());
 		Assert.assertEquals(6, date.getMonthOfYear());
