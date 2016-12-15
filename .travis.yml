@@ -3,7 +3,10 @@ language: java
 sudo: true
 
 group: edge
-  
+
+services:
+  - docker
+
 cache:
   directories:
     - $HOME/.m2
