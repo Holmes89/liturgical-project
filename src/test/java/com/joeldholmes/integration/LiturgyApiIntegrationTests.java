@@ -102,5 +102,11 @@ public class LiturgyApiIntegrationTests {
     	.body("data[0].attributes.year", equalTo(year));
     }
     
+    @Test
+    public void testDate_error(){
+    	get("/api/liturgy/?filter[date]=asdfasdf")
+    	.then()
+    	.statusCode(500);
+    }
     
 }
