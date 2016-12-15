@@ -64,6 +64,21 @@ public class LiturgyResourceControllerTests {
 	}
 	
 	@Test
+	public void testDateRange() throws Exception{
+		Map<String, Set<String>> paramMap = new HashMap<String, Set<String>>();
+		paramMap.put("filter[startDate]", Collections.singleton("2017-01-01"));
+		paramMap.put("filter[endDate]", Collections.singleton("2018-01-01"));
+		
+		QueryParams params = createParams(paramMap);
+		
+		Iterable<LiturgyResource> results = litController.findAll(params);
+		Assert.assertNotNull(results);
+		
+		List<LiturgyResource> resultsList = Lists.newArrayList(results);
+		Assert.assertEquals(68, resultsList.size());
+	}
+	
+	@Test
 	public void testYearFilter() throws Exception{
 		QueryParams params = createParams("filter[year]", "2017");
 		
@@ -94,6 +109,30 @@ public class LiturgyResourceControllerTests {
 		Assert.assertEquals(12, resultDate.getMonthOfYear());
 		Assert.assertEquals(25, resultDate.getDayOfMonth());
 	}
+	
+	@Test
+	public void testHolidayAndYearFilter() throws Exception{
+		Map<String, Set<String>> paramMap = new HashMap<String, Set<String>>();
+		paramMap.put("filter[holiday]", Collections.singleton("Easter"));
+		paramMap.put("filter[year]", Collections.singleton("2017"));
+		
+		QueryParams params = createParams(paramMap);
+		
+		Iterable<LiturgyResource> results = litController.findAll(params);
+		Assert.assertNotNull(results);
+		
+		List<LiturgyResource> resultsList = Lists.newArrayList(results);
+		Assert.assertEquals(1, resultsList.size());
+		
+		LiturgyResource result = resultsList.get(0);
+		Assert.assertEquals("Easter", result.liturgicalDate);
+		
+		DateTime resultDate = new DateTime(result.date);
+		
+		Assert.assertEquals(2017, resultDate.getYear());
+		Assert.assertEquals(4, resultDate.getMonthOfYear());
+		Assert.assertEquals(16, resultDate.getDayOfMonth());
+	}
 
 	
 	private QueryParams createParams(String param, String value){
@@ -101,13 +140,17 @@ public class LiturgyResourceControllerTests {
 		Set<String> valueSet = Collections.singleton(value);
 		queryParams.put(param, valueSet);
 		
+		return createParams(queryParams);
+	}
+	
+	private QueryParams createParams(Map<String, Set<String>> queryParams){
+		
 		QueryParamsBuilder sut = new QueryParamsBuilder(new DefaultQueryParamsParser());
 		return sut.buildQueryParams(queryParams);
 	}
 	
 	private QueryParams emptyParams(){
 		Map<String, Set<String>> queryParams = new HashMap<String, Set<String>>();
-		QueryParamsBuilder sut = new QueryParamsBuilder(new DefaultQueryParamsParser());
-		return sut.buildQueryParams(queryParams);
+		return createParams(queryParams);
 	}
 }
