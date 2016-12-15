@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.assertj.core.util.Lists;
+import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,6 +48,53 @@ public class LiturgyResourceControllerTests {
 		LiturgyResource result = resultsList.get(0);
 		Assert.assertEquals("Pentecost", result.liturgicalDate);
 	}
+	
+	@Test
+	public void testAproxDateFilter() throws Exception{
+		QueryParams params = createParams("filter[approxDate]", "2017-06-03");
+		
+		Iterable<LiturgyResource> results = litController.findAll(params);
+		Assert.assertNotNull(results);
+		
+		List<LiturgyResource> resultsList = Lists.newArrayList(results);
+		Assert.assertEquals(1, resultsList.size());
+		
+		LiturgyResource result = resultsList.get(0);
+		Assert.assertEquals("Pentecost", result.liturgicalDate);
+	}
+	
+	@Test
+	public void testYearFilter() throws Exception{
+		QueryParams params = createParams("filter[year]", "2017");
+		
+		Iterable<LiturgyResource> results = litController.findAll(params);
+		Assert.assertNotNull(results);
+		
+		List<LiturgyResource> resultsList = Lists.newArrayList(results);
+		Assert.assertEquals(71, resultsList.size());
+	}
+	
+	@Test
+	public void testHolidayFilter() throws Exception{
+		QueryParams params = createParams("filter[holiday]", "Christmas Day");
+		
+		Iterable<LiturgyResource> results = litController.findAll(params);
+		Assert.assertNotNull(results);
+		
+		List<LiturgyResource> resultsList = Lists.newArrayList(results);
+		Assert.assertEquals(1, resultsList.size());
+		
+		LiturgyResource result = resultsList.get(0);
+		Assert.assertEquals("Christmas Day", result.liturgicalDate);
+		
+		DateTime currentDate = new DateTime();
+		DateTime resultDate = new DateTime(result.date);
+		
+		Assert.assertEquals(currentDate.getYear(), resultDate.getYear());
+		Assert.assertEquals(12, resultDate.getMonthOfYear());
+		Assert.assertEquals(25, resultDate.getDayOfMonth());
+	}
+
 	
 	private QueryParams createParams(String param, String value){
 		Map<String, Set<String>> queryParams = new HashMap<String, Set<String>>();
