@@ -3,7 +3,6 @@ package com.joeldholmes.repository;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
-import org.joda.time.LocalDateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
