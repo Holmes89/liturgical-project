@@ -26,8 +26,8 @@ branches:
     - master
 
 after_success:
-  - mvn clean test jacoco:report coveralls:report
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker build -t holmes89/liturgy-api:0.$TRAVIS_BUILD_NUMBER .
   - docker build -t holmes89/liturgy-api .
   - docker push holmes89/liturgy-api
+  - mvn clean test jacoco:report coveralls:report
