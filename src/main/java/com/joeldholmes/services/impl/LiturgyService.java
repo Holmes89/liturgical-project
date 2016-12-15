@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +43,7 @@ public class LiturgyService implements ILiturgyService{
 		if(dateString==null || dateString.isEmpty()){
 			throw new ServiceException(ErrorCodes.NULL_INPUT, "Date String must not be null or empty");
 		}
-		DateTime date = new DateTime(convertDate(dateString));
+		DateTime date = (new LocalDateTime(convertDate(dateString))).toDateTime();
 		List<LiturgyEntity> entities = lectRepo.findByDateBetween(date.toDate(), date.plusWeeks(1).toDate());
 		List<LiturgyResource> returnValues = new ArrayList<LiturgyResource>();
 		if(!entities.isEmpty()){
@@ -60,9 +61,9 @@ public class LiturgyService implements ILiturgyService{
 		if(endDateString==null || endDateString.isEmpty()){
 			throw new ServiceException(ErrorCodes.NULL_INPUT, "End Date String must not be null or empty");
 		}
-		DateTime startDate = new DateTime(convertDate(startDateString));
-		DateTime endDate = new DateTime(convertDate(endDateString));
-		List<LiturgyEntity> entities = lectRepo.findByDateBetween(startDate.toDate(), endDate.toDate());
+		Date startDate = convertDate(startDateString);
+		Date endDate = convertDate(endDateString);
+		List<LiturgyEntity> entities = lectRepo.findByDateBetween(startDate, endDate);
 		return convertEntities(entities);
 	}
 
