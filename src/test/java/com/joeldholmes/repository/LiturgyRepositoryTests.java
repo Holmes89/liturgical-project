@@ -2,6 +2,8 @@ package com.joeldholmes.repository;
 
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,8 +32,8 @@ public class LiturgyRepositoryTests {
 	
 	@Test
 	public void testFindByDateBetween(){
-		LocalDateTime startDate = new LocalDateTime(2017, 1, 1, 0, 0, 0);
-		LocalDateTime endDate = startDate.plusYears(1);
+		DateTime startDate = new DateTime(2017, 1, 1, 0, 0, 0).withZoneRetainFields(DateTimeZone.getDefault());
+		DateTime endDate = startDate.plusYears(1);
 		List<LiturgyEntity> entities = litRepo.findByDateBetween(startDate.toDate(), endDate.toDate());
 		Assert.assertNotNull(entities);
 		Assert.assertFalse(entities.isEmpty());
