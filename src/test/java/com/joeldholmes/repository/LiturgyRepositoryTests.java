@@ -3,6 +3,7 @@ package com.joeldholmes.repository;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +22,7 @@ public class LiturgyRepositoryTests {
 	
 	@Test
 	public void testFindByDate(){
-		DateTime date = new DateTime(2017, 1, 1, 0, 0, 0);
+		DateTime date = new DateTime(2017, 1, 1, 0, 0, 0, DateTimeZone.forID("America/New_York"));
 		List<LiturgyEntity> entities = litRepo.findByDate(date.toDate());
 		Assert.assertNotNull(entities);
 		Assert.assertFalse(entities.isEmpty());
@@ -30,7 +31,7 @@ public class LiturgyRepositoryTests {
 	
 	@Test
 	public void testFindByDateBetween(){
-		DateTime startDate = new DateTime(2017, 1, 1, 0, 0, 0);
+		DateTime startDate = new DateTime(2017, 1, 1, 0, 0, 0, DateTimeZone.forID("America/New_York"));
 		DateTime endDate = startDate.plusYears(1);
 		List<LiturgyEntity> entities = litRepo.findByDateBetween(startDate.toDate(), endDate.toDate());
 		Assert.assertNotNull(entities);
