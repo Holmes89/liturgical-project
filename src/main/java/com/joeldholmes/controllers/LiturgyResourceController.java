@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.joeldholmes.exceptions.ServiceException;
 import com.joeldholmes.resources.LiturgyResource;
@@ -17,7 +16,6 @@ import io.katharsis.repository.annotations.JsonApiFindAll;
 import io.katharsis.repository.annotations.JsonApiResourceRepository;
 
 @Component
-@RestController
 @JsonApiResourceRepository(LiturgyResource.class)
 public class LiturgyResourceController {
 	

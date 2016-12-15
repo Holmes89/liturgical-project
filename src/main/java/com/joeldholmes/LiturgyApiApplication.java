@@ -29,42 +29,21 @@ public class LiturgyApiApplication {
 
 	public static void main(String[] args) {
 
-		ApplicationContext ctx =SpringApplication.run(LiturgyApiApplication.class, args);
+		SpringApplication.run(LiturgyApiApplication.class, args);
 
 	}
 
-	@Autowired
-	private ResourceRegistry resourceRegistry;
-
-
-	@RequestMapping("/resourcesInfo")
-	public Map<?, ?> getResources() {
-		Map<String, String> result = new HashMap<>();
-		// Add all resources (i.e. Project and Task)
-		for (Class<?> clazz : resourceRegistry.getResources().keySet()) {
-			result.put(resourceRegistry.getResourceType(clazz), resourceRegistry.getResourceUrl(clazz));
+	  @Autowired
+		private ResourceRegistry resourceRegistry;
+		 
+			
+		@RequestMapping("/resourcesInfo")
+	    public Map<?, ?> getResources() {
+	        Map<String, String> result = new HashMap<>();
+	        // Add all resources (i.e. Project and Task)
+	        for (Class<?> clazz : resourceRegistry.getResources().keySet()) {
+	           result.put(resourceRegistry.getResourceType(clazz), resourceRegistry.getResourceUrl(clazz));
+	        }
+	        return result;
 		}
-		return result;
-	}	
-	
-	@Bean
-	public FilterRegistrationBean corsFilter() {
-	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	    CorsConfiguration config = new CorsConfiguration();
-	    config.setAllowCredentials(true);
-	    config.addAllowedOrigin("*");
-	    config.addAllowedHeader("*");
-	    config.addAllowedMethod("OPTIONS");
-	    config.addAllowedMethod("HEAD");
-	    config.addAllowedMethod("GET");
-	    config.addAllowedMethod("PUT");
-	    config.addAllowedMethod("POST");
-	    config.addAllowedMethod("DELETE");
-	    config.addAllowedMethod("PATCH");
-	    source.registerCorsConfiguration("/**", config);
-	    // return new CorsFilter(source);
-	    final FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-	    bean.setOrder(0);
-	    return bean;
-	}
 }
