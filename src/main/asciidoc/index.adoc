@@ -1,21 +1,11 @@
-= Spring REST Docs REST Assured Sample
+= Liturgy API
 Joel Holmes;
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
 
-Sample application demonstrating how to use Spring REST Docs with REST Assured.
-
-`SampleRestAssuredApplicationTests` makes a call to a very simple service. The service
-that is being tested is running on a random port on `localhost`. The tests make use of a
-preprocessor to modify the request so that it appears to have been sent to
-`https://api.example.com`. If your service includes URIs in its responses, for example
-because it uses hypermedia, similar preprocessing can be applied to the response before
-it is documented.
-
-Three snippets are produced. One showing how to make a request using cURL:
-
-include::{snippets}/index/curl-request.adoc[]
+This API is built on the http://jsonapi.org[JSON API] standard. The only function
+available is `GET` with the various filters oulined below.
 
 One showing the HTTP request:
 
@@ -24,3 +14,7 @@ include::{snippets}/index/http-request.adoc[]
 And one showing the HTTP response:
 
 include::{snippets}/index/http-response.adoc[]
+
+Response Values
+
+include::{snippets}/index/response-fields.adoc[]

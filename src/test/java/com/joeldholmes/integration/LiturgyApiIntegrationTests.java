@@ -4,6 +4,7 @@ import static com.jayway.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.restdocs.restassured.RestAssuredRestDocumentation.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.restassured.operation.preprocess.RestAssuredPreprocessors.*;
 
 
@@ -17,6 +18,7 @@ import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.restdocs.JUnitRestDocumentation;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.jayway.restassured.response.*;
@@ -52,7 +54,7 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testConnection(){
     	given(this.spec)
-   // 	.accept("application/json") 
+    	.accept("application/vnd.api+json;charset=UTF-8")
 		.filter(document("resources"))
 		.get("/resourcesInfo").then().statusCode(200);
     }
@@ -60,7 +62,7 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testLiturgyNoInput(){
     	given(this.spec)
-  //  	.accept("application/json") 
+    	.accept("application/vnd.api+json;charset=UTF-8")
 		.filter(document("emptyInput"))
 		.get("/api/liturgy/").
     	then()
@@ -71,9 +73,54 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testLiturgDate(){
     	given(this.spec)
-  //  	.accept("application/json") 
-		.filter(document("index", preprocessRequest(prettyPrint(), modifyUris().host("liturgy.jholmestech.com").port(8080)), 
-				preprocessResponse(prettyPrint()))) 
+    	.accept("application/vnd.api+json;charset=UTF-8") 
+		.filter(document("index", 
+				preprocessRequest(
+							prettyPrint(), 
+							modifyUris().host("liturgy.jholmestech.com").port(8080)), 
+				preprocessResponse(prettyPrint()),
+				responseFields(
+						fieldWithPath("data")
+								.type(JsonFieldType.ARRAY) 
+								.description("Array of objects returned by service per JSON API standard"),
+						fieldWithPath("data[0].type")
+								.type(JsonFieldType.STRING) 
+								.description("Type of object being returned (JSON API)"),
+						fieldWithPath("data[0].id")
+								.type(JsonFieldType.STRING) 
+								.description("Id of object being returned (JSON API)"),
+						fieldWithPath("data[0].attributes")
+								.type(JsonFieldType.OBJECT) 
+								.description("Attributes of object being returned (JSON API)"),
+						fieldWithPath("data[0].attributes.date")
+								.type(JsonFieldType.NUMBER) 
+								.description("Timestamp of Liturgical Event"),
+						fieldWithPath("data[0].attributes.liturgicalYear")
+								.type(JsonFieldType.STRING) 
+								.description("Letter of year for Liturgy"),
+						fieldWithPath("data[0].attributes.year")
+								.type(JsonFieldType.NUMBER) 
+								.description("Year of event"),
+						fieldWithPath("data[0].attributes.liturgicalDate")
+								.type(JsonFieldType.STRING) 
+								.description("Event name"),
+						fieldWithPath("data[0].attributes.litany")
+								.type(JsonFieldType.ARRAY) 
+								.description("Array of Strings denoting verses to be read for this event"),
+						fieldWithPath("data[0].relationships")
+								.type(JsonFieldType.OBJECT) 
+								.description("Linked Resources (none) (JSON API)"),
+						fieldWithPath("data[0].links")
+								.type(JsonFieldType.OBJECT) 
+								.description("Links to resources"),
+						fieldWithPath("data[0].links.self")
+								.type(JsonFieldType.STRING) 
+								.description("URL to get this object"),
+						fieldWithPath("included")
+								.type(JsonFieldType.ARRAY) 
+								.description("Included objects")
+					)
+				)) 
 		.get("/api/liturgy/?filter[date]=2017-06-04").
     	then()
     	.statusCode(200)
@@ -84,7 +131,7 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testLiturgApproxDate(){
     	given(this.spec)
-   // 	.accept("application/json") 
+    	.accept("application/vnd.api+json;charset=UTF-8") 
 		.filter(document("approxDate"))
 		.get("/api/liturgy/?filter[approxDate]=2017-06-03").
     	then()
@@ -96,7 +143,7 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testLitugDateRange(){
     	given(this.spec)
-  //  	.accept("application/json") 
+    	.accept("application/vnd.api+json;charset=UTF-8") 
 		.filter(document("getRange"))
 		.get("/api/liturgy/?filter[startDate]=2017-01-01&filter[endDate]=2018-01-01").
     	then()
@@ -119,7 +166,7 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testLitugYear(){
     	given(this.spec)
-   // 	.accept("application/json") 
+    	.accept("application/vnd.api+json;charset=UTF-8") 
 		.filter(document("getYear"))
 		.get("/api/liturgy/?filter[year]=2017")
     	.then()
@@ -132,7 +179,7 @@ public class LiturgyApiIntegrationTests {
     	int year = (new DateTime()).getYear();
     	
     	given(this.spec)
-    //	.accept("application/json") 
+    	.accept("application/vnd.api+json;charset=UTF-8") 
 		.filter(document("getHoliday"))
 		.get("/api/liturgy/?filter[holiday]=Christmas Day")
     	.then()
@@ -144,7 +191,7 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testDate_error(){
     	given(this.spec)
-    //	.accept("application/json") 
+    	.accept("application/vnd.api+json;charset=UTF-8") 
 		.filter(document("error"))
 		.get("/api/liturgy/?filter[date]=asdfasdf")
     	.then()
