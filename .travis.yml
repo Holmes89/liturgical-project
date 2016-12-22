@@ -4,6 +4,9 @@ sudo: true
 
 group: edge
 
+addons:
+  artifacts: true
+
 services:
   - docker
 
@@ -24,6 +27,15 @@ script: mvn clean install
 branches:
   only:
     - master
+
+deploy:
+  provider: s3
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"
+  bucket: "$S3_BUCKET"
+  skip_cleanup: true
+  local_dir: target/generated-docs
+  upload-dir: liturgy
 
 after_success:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
