@@ -4,9 +4,6 @@ sudo: true
 
 group: edge
 
-addons:
-  artifacts: true
-
 services:
   - docker
 
