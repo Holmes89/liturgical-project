@@ -1,13 +1,16 @@
 = Liturgy API
-Joel Holmes;
+v0.0.1 Joel Holmes <holmes89@gmail.com>;
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
+:toc: left
 
 This API is built on the http://jsonapi.org[JSON API] standard. The only function
 available is `GET` with the various filters oulined below.
 
-One showing the HTTP request:
+All dates are formatted in _YYYY/MM/dd_ format.
+
+One showing the HTTP request is for a specific date:
 
 include::{snippets}/index/http-request.adoc[]
 
@@ -15,6 +18,110 @@ And one showing the HTTP response:
 
 include::{snippets}/index/http-response.adoc[]
 
-Response Values
+== Response Values
 
 include::{snippets}/index/response-fields.adoc[]
+
+== Filter Types
+
+* _approxDate_ - Approximate Date gets the next available holiday from given date
+
+include::{snippets}/approxDate/http-request.adoc[]
+
+* _getHoliday_ - Given a holiday name the result will be holiday information for the current year
+
+include::{snippets}/getHoliday/http-request.adoc[]
+
+* _getHolidayAndYear_ - Given a holiday name and year the result will be holiday information for the given year
+
+include::{snippets}/getHolidayAndYear/http-request.adoc[]
+
+* _getRange_ - Given a range of dates all events will be returned
+
+include::{snippets}/getRange/http-request.adoc[]
+
+* _getYear_ - Given a year all holidays will be returned
+
+include::{snippets}/getYear/http-request.adoc[]
+
+== Available Holidays
+* First Sunday of Advent
+* Second Sunday of Advent
+* Third Sunday of Advent
+* Forth Sunday of Advent
+* Christmas Eve
+* Christmas Day
+* First Sunday After Christmas
+* Feast of the Holy Name of Jesus
+* New Years Day
+* Second Sunday After Christmas
+* Epiphany of the Lord
+* First Sunday of Epiphany
+* Second Sunday of Epiphany
+* Third Sunday of Epiphany
+* Fourth Sunday of Epiphany
+* Fifth Sunday of Epiphany
+* Sixth Sunday of Epiphany
+* Seventh Sunday of Epiphany
+* Eighth Sunday of Epiphany
+* Ninth Sunday of Epiphany
+* Presentation of Jesus at the Temple
+* Transfiguration Sunday
+* Ash Wednesday
+* First Sunday of Lent
+* Second Sunday of Lent
+* Third Sunday of Lent
+* Fourth Sunday of Lent
+* Fifth Sunday of Lent
+* Palm Sunday
+* Monday of Holy Week
+* Tuesday of Holy Week
+* Wednesday of Holy Week
+* Maundy Thursday
+* Good Friday
+* Holy Saturday
+* Easter Vigil
+* Easter
+* Second Sunday of Easter
+* Annunciation of the Lord
+* Third Sunday of Easter
+* Fourth Sunday of Easter
+* Fifth Sunday of Easter
+* Sixth Sunday of Easter
+* Ascension of the Lord
+* Ascension Sunday
+* Seventh Sunday of Easter
+* Pentecost
+* Feast of Visitation of Mary to Elizabeth
+* Feast of the Cross
+* Trinity Sunday
+* Second Sunday after Pentecost
+* Third Sunday after Pentecost
+* Fourth Sunday after Pentecost
+* Fifth Sunday after Pentecost
+* Sixth Sunday after Pentecost
+* Seventh Sunday after Pentecost
+* Eighth Sunday after Pentecost
+* Ninth Sunday after Pentecost
+* Tenth Sunday after Pentecost
+* Eleventh Sunday after Pentecost
+* Twelfth Sunday after Pentecost
+* Thirteenth Sunday after Pentecost
+* Fourteenth Sunday after Pentecost
+* Fifteenth Sunday after Pentecost
+* Sixteenth Sunday after Pentecost
+* Seventeenth Sunday after Pentecost
+* Eighteenth Sunday after Pentecost
+* Ninteenth Sunday after Pentecost
+* Twentieth Sunday after Pentecost
+* Twenty-First Sunday after Pentecost
+* Twenty-Second Sunday after Pentecost
+* Twenty-Third Sunday after Pentecost
+* Twenty-Fourth Sunday after Pentecost
+* Twenty-Fifth Sunday after Pentecost
+* Twenty-Sixth Sunday after Pentecost
+* Twenty-Seventh Sunday after Pentecost
+* Christ is King Sunday
+* All Saints Day
+* Canadian Thanksgiving Day
+* Thanksgiving Day

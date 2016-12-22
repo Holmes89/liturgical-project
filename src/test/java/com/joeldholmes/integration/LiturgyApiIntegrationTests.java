@@ -73,6 +73,7 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testLiturgDate(){
     	given(this.spec)
+    	.queryParam("filter[date]", "2017-06-04")
     	.accept("application/vnd.api+json;charset=UTF-8") 
 		.filter(document("index", 
 				preprocessRequest(
@@ -121,8 +122,8 @@ public class LiturgyApiIntegrationTests {
 								.description("Included objects")
 					)
 				)) 
-		.get("/api/liturgy/?filter[date]=2017-06-04").
-    	then()
+		.get("/api/liturgy/")
+    	.then()
     	.statusCode(200)
     	.body("data", hasSize(1))
     	.body("data[0].attributes.liturgicalDate", equalTo("Pentecost"));
@@ -131,9 +132,10 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testLiturgApproxDate(){
     	given(this.spec)
+    	.queryParam("filter[approxDate]", "2017-06-03")
     	.accept("application/vnd.api+json;charset=UTF-8") 
 		.filter(document("approxDate"))
-		.get("/api/liturgy/?filter[approxDate]=2017-06-03").
+		.get("/api/liturgy/").
     	then()
     	.statusCode(200)
     	.body("data", hasSize(1))
@@ -143,9 +145,11 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testLitugDateRange(){
     	given(this.spec)
+    	.queryParam("filter[startDate]", "2017-01-01")
+    	.queryParam("filter[endDate]", "2018-01-01")
     	.accept("application/vnd.api+json;charset=UTF-8") 
 		.filter(document("getRange"))
-		.get("/api/liturgy/?filter[startDate]=2017-01-01&filter[endDate]=2018-01-01").
+		.get("/api/liturgy/").
     	then()
     	.statusCode(200)
     	.body("data", hasSize(68));
@@ -154,9 +158,11 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testLiturgHolidayAndYear(){ 	
     	given(this.spec)
-   // 	.accept("application/json") 
+    	.queryParam("filter[holiday]", "Christmas Day")
+    	.queryParam("filter[year]", "2018")
+    	.accept("application/vnd.api+json;charset=UTF-8") 
 		.filter(document("getHolidayAndYear"))
-		.get("/api/liturgy/?filter[holiday]=Christmas Day&filter[year]=2018")
+		.get("/api/liturgy/")
     	.then()
     	.statusCode(200)
     	.body("data", hasSize(1))
@@ -166,9 +172,10 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testLitugYear(){
     	given(this.spec)
+    	.queryParam("filter[year]", "2017")
     	.accept("application/vnd.api+json;charset=UTF-8") 
 		.filter(document("getYear"))
-		.get("/api/liturgy/?filter[year]=2017")
+		.get("/api/liturgy/")
     	.then()
     	.statusCode(200)
     	.body("data", hasSize(71));
@@ -179,9 +186,10 @@ public class LiturgyApiIntegrationTests {
     	int year = (new DateTime()).getYear();
     	
     	given(this.spec)
+    	.queryParam("filter[holiday]", "Christmas Day")
     	.accept("application/vnd.api+json;charset=UTF-8") 
 		.filter(document("getHoliday"))
-		.get("/api/liturgy/?filter[holiday]=Christmas Day")
+		.get("/api/liturgy/")
     	.then()
     	.statusCode(200)
     	.body("data", hasSize(1))
@@ -191,9 +199,9 @@ public class LiturgyApiIntegrationTests {
     @Test
     public void testDate_error(){
     	given(this.spec)
+    	.queryParam("filter[date]", "asdfasdf")
     	.accept("application/vnd.api+json;charset=UTF-8") 
 		.filter(document("error"))
-		.get("/api/liturgy/?filter[date]=asdfasdf")
     	.then()
     	.statusCode(500);
     }
