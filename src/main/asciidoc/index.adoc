@@ -1,5 +1,5 @@
 = Liturgy API
-v0.0.1 Joel Holmes <holmes89@gmail.com>;
+v0.1.1 Joel Holmes <holmes89@gmail.com>;
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -10,7 +10,7 @@ v0.0.1 Joel Holmes <holmes89@gmail.com>;
 This API is built on the http://jsonapi.org[JSON API] standard. The only function
 available is `GET` with the various filters oulined below.
 
-All dates are formatted in _YYYY/MM/dd_ format.
+All dates are formatted in _YYYY-MM-dd_ format.
 
 One showing the HTTP request is for a specific date:
 

@@ -43,8 +43,14 @@ public class LiturgyService implements ILiturgyService{
 		if(dateString==null || dateString.isEmpty()){
 			throw new ServiceException(ErrorCodes.NULL_INPUT, "Date String must not be null or empty");
 		}
-		DateTime date = new DateTime(convertDate(dateString));
-		List<LiturgyEntity> entities = lectRepo.findByDateBetween(date.toDate(), date.plusWeeks(1).toDate());
+		
+		Date date = convertDate(dateString);
+		DateTime dateTime = new DateTime(date);
+		
+		List<LiturgyEntity> entities = lectRepo.findByDate(date);
+		if(entities ==null || entities.isEmpty()){
+				entities=lectRepo.findByDateBetween(date, dateTime.plusWeeks(1).toDate());
+		}
 		List<LiturgyResource> returnValues = new ArrayList<LiturgyResource>();
 		if(!entities.isEmpty()){
 			returnValues = convertEntities(Collections.singletonList(entities.get(0)));

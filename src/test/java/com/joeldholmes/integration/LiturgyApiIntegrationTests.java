@@ -195,7 +195,7 @@ public class LiturgyApiIntegrationTests {
     	.body("data", hasSize(1))
     	.body("data[0].attributes.year", equalTo(year));
     }
-    
+   
     @Test
     public void testDate_error(){
     	given(this.spec)
@@ -204,6 +204,18 @@ public class LiturgyApiIntegrationTests {
 		.filter(document("error"))
     	.then()
     	.statusCode(500);
+    }
+    
+    @Test
+    public void testApproxDateOnDate(){
+    	given(this.spec)
+    	.queryParam("filter[approxDate]", "2017-01-08")
+    	.accept("application/vnd.api+json;charset=UTF-8") 
+		.get("/api/liturgy/").
+    	then()
+    	.statusCode(200)
+    	.body("data", hasSize(1))
+    	.body("data[0].attributes.liturgicalDate", equalTo("First Sunday of Epiphany"));
     }
     
 }

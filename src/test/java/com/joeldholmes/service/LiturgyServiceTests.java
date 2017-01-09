@@ -85,6 +85,22 @@ public class LiturgyServiceTests {
 		Assert.assertEquals("Pentecost", resource.liturgicalDate);
 	}
 	
+	@Test
+	public void testFindByApproximateDate_onDate() throws Exception{
+		List<LiturgyResource> resources = litService.findByApproximateDate("2017-01-08");
+		Assert.assertFalse(resources.isEmpty());
+		Assert.assertEquals(1, resources.size());
+		
+		LiturgyResource resource = resources.get(0);
+		DateTime date = new DateTime(resource.date);
+		
+		Assert.assertEquals('a', resource.liturgicalYear);
+		Assert.assertEquals(2017, date.getYear());
+		Assert.assertEquals(1, date.getMonthOfYear());
+		Assert.assertEquals(8, date.getDayOfMonth());
+		Assert.assertEquals("First Sunday of Epiphany", resource.liturgicalDate);
+	}
+	
 	@Test(expected=ServiceException.class)
 	public void testFindByApproximateDate_nullDate() throws Exception{
 		try{
